@@ -1,9 +1,7 @@
 package org.openchat.infrastructure.persistence
 
-import org.openchat.domain.user.User
-import org.openchat.domain.user.UserId
-import org.openchat.domain.user.UserRepository
-import org.openchat.domain.user.Username
+import arrow.core.Option
+import org.openchat.domain.user.*
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -20,5 +18,10 @@ class InMemoryUserRepository : UserRepository {
 
     override fun isUsernameInUse(username: Username): Boolean {
         return usersByUsername.containsKey(username)
+    }
+
+    override fun userWith(credentials: Credentials): Option<User> {
+        return Option.fromNullable(usersByUsername[credentials.username])
+                .filter { user -> user.has(credentials) }
     }
 }

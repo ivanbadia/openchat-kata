@@ -20,7 +20,6 @@ fun registerUser(userRepository: UserRepository): (RegisterUserCmd) -> Either<Us
 
 private fun userFrom(userId: UserId, registerUserCmd: RegisterUserCmd): User {
     return User(userId,
-            Username(registerUserCmd.username),
-            registerUserCmd.password,
+            Credentials(Username(registerUserCmd.username), registerUserCmd.password),
             registerUserCmd.about)
 }

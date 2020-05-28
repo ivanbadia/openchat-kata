@@ -17,7 +17,7 @@ class RegisterUserShould extends Specification {
         UserId userId = new UserId("userId")
         userRepository.nextId() >> userId
         RegisterUserCmd registerUserCmd = new RegisterUserCmd(USERNAME, PASSWORD, ABOUT)
-        def expectedUser = new User(userId, new Username(USERNAME), PASSWORD, ABOUT)
+        def expectedUser = new User(userId, new Credentials(new Username(USERNAME), PASSWORD), ABOUT)
 
         when:
         Either<UsernameAlreadyInUse, User> result = registerUser(userRepository).invoke registerUserCmd
@@ -37,7 +37,7 @@ class RegisterUserShould extends Specification {
         def result = registerUser(userRepository).invoke registerUserCmd
 
         then:
-        result == new Either.Left<>(new UsernameAlreadyInUse(username))
+        result == new Either.Left<UsernameAlreadyInUse>(new UsernameAlreadyInUse(username))
 
     }
 
