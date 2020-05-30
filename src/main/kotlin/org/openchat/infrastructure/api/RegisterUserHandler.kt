@@ -4,6 +4,8 @@ import arrow.core.Either
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.openchat.application.usecases.RegisterUserCmd
+import org.openchat.domain.post.InappropriateLanguage
+import org.openchat.domain.post.Post
 import org.openchat.domain.user.User
 import org.openchat.domain.user.UsernameAlreadyInUse
 import org.openchat.infrastructure.api.json.toJson
@@ -15,14 +17,10 @@ import ratpack.http.Status.CREATED
 import ratpack.jackson.Jackson.jsonNode
 
 class RegisterUserHandler(private val registerUser: (RegisterUserCmd) -> Either<UsernameAlreadyInUse, User>) : Handler {
-    override fun handle(ctx: Context) {
-        ctx.parse(jsonNode())
-                .map { it.toRegisterUserCmd() }
-                .map { registerUser(it) }
-                .then {
-                    either -> either.fold(sendUsernameAlreadyInUse(ctx), sendCreatedUser(ctx))
-                }
-    }
+    override fun handle(ctx: Context) = ctx.parse(jsonNode())
+            .map { it.toRegisterUserCmd() }
+            .map { registerUser(it) }
+            .then(sendResponse(ctx))
 
     private fun JsonNode.toRegisterUserCmd(): RegisterUserCmd {
         return RegisterUserCmd(
@@ -30,6 +28,12 @@ class RegisterUserHandler(private val registerUser: (RegisterUserCmd) -> Either<
                 this.get("password").asText(),
                 this.get("about").asText()
         )
+    }
+
+    private fun sendResponse(ctx: Context): (Either<UsernameAlreadyInUse, User>) -> Unit {
+        return { either ->
+            either.fold(sendUsernameAlreadyInUse(ctx), sendCreatedUser(ctx))
+        }
     }
 
     private fun sendUsernameAlreadyInUse(ctx: Context): (UsernameAlreadyInUse) -> Unit {

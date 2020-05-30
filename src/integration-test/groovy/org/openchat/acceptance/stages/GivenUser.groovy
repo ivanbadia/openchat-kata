@@ -8,7 +8,7 @@ import ratpack.http.client.ReceivedResponse
 import static org.openchat.acceptance.stages.UserBuilder.anUser
 
 
-class Given extends Stage<Given> {
+class GivenUser extends Stage<GivenUser> {
     @ProvidedScenarioState
     User user
     @ProvidedScenarioState

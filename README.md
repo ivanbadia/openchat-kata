@@ -1,1 +1,3 @@
-Kata implemented to learn Ratpack, Spock + jgiven and Kotlin
+Kata implemented to learn Ratpack, Kotlin and Spock + jgiven.
+
+Application implemented following these [specification](APIs.yaml)

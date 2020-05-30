@@ -7,7 +7,8 @@ import org.openchat.domain.user.UserRepository
 import org.openchat.domain.user.Username
 import spock.lang.Specification
 
-import static org.openchat.infrastructure.builders.UserBuilder.anUser
+import static org.openchat.builders.UserBuilder.anUser
+
 
 class InMemoryUserRepositoryShould extends Specification {
     private static final User IVAN = anUser()
@@ -17,7 +18,7 @@ class InMemoryUserRepositoryShould extends Specification {
     private static final User PABLO = anUser()
             .withUsername("pablo")
             .build()
-    public static final Credentials UNKNOWN_USER_CREDENTIALS = new Credentials(new Username("invalid"), "invalid")
+    private static final Credentials UNKNOWN_USER_CREDENTIALS = new Credentials(new Username("invalid"), "invalid")
     private static final Credentials IVAN_CREDENTIALS_WITH_INVALID_PASSWORD = new Credentials(IVAN.username, "invalid_password")
     private static final Credentials IVAN_CREDENTIALS = new Credentials(IVAN.username, "ivan_password")
 

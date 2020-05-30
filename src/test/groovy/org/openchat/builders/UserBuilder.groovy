@@ -1,4 +1,4 @@
-package org.openchat.infrastructure.builders
+package org.openchat.builders
 
 import org.openchat.domain.user.Credentials
 import org.openchat.domain.user.User

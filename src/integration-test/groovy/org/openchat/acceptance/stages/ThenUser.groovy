@@ -9,18 +9,17 @@ import ratpack.http.client.ReceivedResponse
 import static ratpack.http.Status.CREATED
 import static ratpack.http.Status.OK
 
-class Then extends Stage<Then> {
+class ThenUser extends Stage<ThenUser> {
     private static final def UUID_PATTERN = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
 
     @ExpectedScenarioState
-    User user
+    private User user
     @ExpectedScenarioState
-    ReceivedResponse response
+    private ReceivedResponse response
 
     def the_user_is_registered() {
         assert response.status == CREATED
         assertThatBodyContainsUser()
-
         self()
     }
 

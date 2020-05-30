@@ -14,12 +14,14 @@ import ratpack.http.Status
 import ratpack.jackson.Jackson.jsonNode
 
 class LoginHandler(private val loginUser: (String, String) -> Option<User>) : Handler {
-    override fun handle(ctx: Context) {
-        ctx.parse(jsonNode())
-                .map {json -> loginUser(usernameFrom(json), passwordFrom(json)) }
-                .then { maybeUser ->
-                    maybeUser.fold(sendCredentialsNotFound(ctx), sendUser(ctx))
-                }
+    override fun handle(ctx: Context) = ctx.parse(jsonNode())
+            .map { json -> loginUser(usernameFrom(json), passwordFrom(json)) }
+            .then(sendResponse(ctx))
+
+    private fun sendResponse(ctx: Context): (Option<User>) -> Unit {
+        return { maybeUser ->
+            maybeUser.fold(sendCredentialsNotFound(ctx), sendUser(ctx))
+        }
     }
 
     private fun passwordFrom(it: JsonNode) = it.get("password").asText()

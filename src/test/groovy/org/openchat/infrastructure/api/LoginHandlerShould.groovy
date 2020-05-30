@@ -10,7 +10,7 @@ import ratpack.test.handling.HandlingResult
 import ratpack.test.handling.RequestFixture
 import spock.lang.Specification
 
-import static org.openchat.infrastructure.builders.UserBuilder.anUser
+import static org.openchat.builders.UserBuilder.anUser
 
 class LoginHandlerShould extends Specification {
     private static final String IVAN_USERNAME = "ivan"

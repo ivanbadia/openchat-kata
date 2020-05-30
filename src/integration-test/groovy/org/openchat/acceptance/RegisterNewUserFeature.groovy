@@ -1,11 +1,11 @@
 package org.openchat.acceptance
 
 import com.tngtech.jgiven.spock.ScenarioSpec
-import org.openchat.acceptance.stages.Given
-import org.openchat.acceptance.stages.Then
-import org.openchat.acceptance.stages.When
+import org.openchat.acceptance.stages.GivenUser
+import org.openchat.acceptance.stages.ThenUser
+import org.openchat.acceptance.stages.WhenUser
 
-class RegisterNewUserFeature extends ScenarioSpec<Given, When, Then> {
+class RegisterNewUserFeature extends ScenarioSpec<GivenUser, WhenUser, ThenUser> {
 
     def "should register a new user"() {
         expect:
