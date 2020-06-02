@@ -1,11 +1,11 @@
 package org.openchat.acceptance
 
 import com.tngtech.jgiven.spock.ScenarioSpec
-import org.openchat.acceptance.stages.GivenUser
+import org.openchat.acceptance.stages.Given
 import org.openchat.acceptance.stages.ThenPost
 import org.openchat.acceptance.stages.WhenPost
 
-class CreatePostFeature extends ScenarioSpec<GivenUser, WhenPost, ThenPost> {
+class CreatePostFeature extends ScenarioSpec<Given, WhenPost, ThenPost> {
 
     def "should create post"() {
         expect:

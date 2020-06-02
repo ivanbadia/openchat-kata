@@ -6,14 +6,13 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import org.openchat.domain.post.InappropriateLanguage
 import org.openchat.domain.post.Post
 import org.openchat.infrastructure.api.json.toJson
-import ratpack.func.Action
 import ratpack.handling.Context
 import ratpack.handling.Handler
 import ratpack.http.MediaType
 import ratpack.http.Status
 import ratpack.jackson.Jackson
 
-class PostsHandler(private val registerPost: (String, String) -> Either<InappropriateLanguage, Post>) : Handler {
+class CreatePostHandler(private val registerPost: (String, String) -> Either<InappropriateLanguage, Post>) : Handler {
     override fun handle(ctx: Context) = ctx.parse(Jackson.jsonNode())
             .map(toPostText())
             .map { registerPost(ctx.pathTokens["userId"]!!, it) }
@@ -27,7 +26,6 @@ class PostsHandler(private val registerPost: (String, String) -> Either<Inapprop
                     sendCreatedPost(ctx))
         }
     }
-
 
     private fun sendPostContainsInappropriateLanguage(ctx: Context): (InappropriateLanguage) -> Unit {
         return {

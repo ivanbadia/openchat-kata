@@ -4,13 +4,13 @@ import arrow.core.Option
 import com.fasterxml.jackson.databind.ObjectMapper
 import groovy.json.JsonOutput
 import org.openchat.domain.user.User
-import ratpack.http.MediaType
 import ratpack.http.Status
 import ratpack.test.handling.HandlingResult
 import ratpack.test.handling.RequestFixture
 import spock.lang.Specification
 
 import static org.openchat.builders.UserBuilder.anUser
+import static ratpack.http.MediaType.APPLICATION_JSON
 
 class LoginHandlerShould extends Specification {
     private static final String IVAN_USERNAME = "ivan"
@@ -31,11 +31,12 @@ class LoginHandlerShould extends Specification {
         when:
         HandlingResult result = RequestFixture.handle(
                 new LoginHandler(loginUser),
-                { fixture -> fixture.body(jsonWith(IVAN_USERNAME, IVAN_PASSWORD), MediaType.APPLICATION_JSON) }
+                { fixture -> fixture.body(jsonWith(IVAN_USERNAME, IVAN_PASSWORD), APPLICATION_JSON) }
         )
 
         then:
         result.status == Status.OK
+        result.headers["content-type"] == APPLICATION_JSON
         result.bodyText == JsonOutput.toJson([userId: IVAN.id.asString(), username: IVAN_USERNAME, about: IVAN.about])
     }
 
@@ -46,7 +47,7 @@ class LoginHandlerShould extends Specification {
         when:
         HandlingResult result = RequestFixture.handle(
                 new LoginHandler(loginUser),
-                { fixture -> fixture.body(jsonWith(IVAN_USERNAME, IVAN_PASSWORD), MediaType.APPLICATION_JSON) }
+                { fixture -> fixture.body(jsonWith(IVAN_USERNAME, IVAN_PASSWORD), APPLICATION_JSON) }
         )
 
         then:

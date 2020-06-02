@@ -14,6 +14,7 @@ import ratpack.test.handling.RequestFixture
 import spock.lang.Specification
 
 import static org.openchat.builders.UserBuilder.anUser
+import static ratpack.http.MediaType.APPLICATION_JSON
 
 class RegisterUserHandlerShould extends Specification {
     private static final String IVAN_PASSWORD = "password"
@@ -39,6 +40,7 @@ class RegisterUserHandlerShould extends Specification {
 
         then:
         result.status == Status.CREATED
+        result.headers["content-type"] == APPLICATION_JSON
         result.bodyText == JsonOutput.toJson([userId: IVAN.id.asString(), username: IVAN.username.asString(), about: IVAN.about])
         capturedRegisterUserCmd.properties == new RegisterUserCmd(IVAN.username.asString(), IVAN_PASSWORD, IVAN.about).properties
     }

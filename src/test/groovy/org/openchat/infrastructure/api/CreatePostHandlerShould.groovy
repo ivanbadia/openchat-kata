@@ -6,7 +6,6 @@ import groovy.json.JsonOutput
 import org.openchat.builders.PostBuilder
 import org.openchat.domain.post.InappropriateLanguage
 import org.openchat.domain.post.Post
-import ratpack.http.MediaType
 import ratpack.http.Status
 import ratpack.test.handling.HandlingResult
 import ratpack.test.handling.RequestFixture
@@ -14,7 +13,9 @@ import spock.lang.Specification
 
 import java.time.LocalDateTime
 
-class PostsHandlerShould extends Specification {
+import static ratpack.http.MediaType.APPLICATION_JSON
+
+class CreatePostHandlerShould extends Specification {
 
     private static final String POST_TEXT = "Hello World!!!"
     private static final String USER_ID = UUID.randomUUID().toString()
@@ -34,17 +35,18 @@ class PostsHandlerShould extends Specification {
 
         when:
         HandlingResult result = RequestFixture.handle(
-                new PostsHandler(registerPost),
+                new CreatePostHandler(registerPost),
                 { fixture ->
                     fixture
                             .pathBinding(["userId": USER_ID])
-                            .body(jsonWith(POST_TEXT), MediaType.APPLICATION_JSON)
+                            .body(jsonWith(POST_TEXT), APPLICATION_JSON)
                 }
         )
 
         then:
         result.status == Status.CREATED
-        result.bodyText == JsonOutput.toJson([postId: POST.id.asString(), text: POST_TEXT, userId: USER_ID, text: POST.text, dateTime: "2020-05-29T16:04:00Z"])
+        result.headers["content-type"] == APPLICATION_JSON
+        result.bodyText == JsonOutput.toJson([postId: POST.id.asString(), text: POST_TEXT, userId: USER_ID, dateTime: "2020-05-29T16:04:00Z"])
     }
 
     def "fail if post contains inappropriate language"() {
@@ -55,11 +57,11 @@ class PostsHandlerShould extends Specification {
 
         when:
         HandlingResult result = RequestFixture.handle(
-                new PostsHandler(registerPost),
+                new CreatePostHandler(registerPost),
                 { fixture ->
                     fixture
                             .pathBinding(["userId": USER_ID])
-                            .body(jsonWith(POST_TEXT), MediaType.APPLICATION_JSON)
+                            .body(jsonWith(POST_TEXT), APPLICATION_JSON)
                 }
         )
 
