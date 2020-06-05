@@ -6,13 +6,17 @@ import arrow.core.right
 import org.openchat.domain.post.*
 import org.openchat.domain.user.*
 
-fun createPost(postRepository: PostRepository, inappropriateLanguageDetector: InappropriateLanguageDetector, clock: Clock): (String, String) -> Either<InappropriateLanguage, Post> =
-        { userId, text ->
-            if(inappropriateLanguageDetector.containsInappropriateWords(text)) {
-                InappropriateLanguage().left()
-            } else {
-                val post = Post(postRepository.nextId(), UserId(userId), text, clock.now())
-                postRepository.add(post)
-                post.right()
+fun createPost(postRepository: PostRepository,
+               inappropriateLanguageDetector: InappropriateLanguageDetector,
+               clock: Clock)
+        : (String, String) -> Either<InappropriateLanguage, Post> =
+        lambda@{ userId, text ->
+            if (inappropriateLanguageDetector.containsInappropriateWords(text)) {
+                return@lambda InappropriateLanguage().left()
             }
+
+            val post = Post(postRepository.nextId(), UserId(userId), text, clock.now())
+            postRepository.add(post)
+            post.right()
+
         }

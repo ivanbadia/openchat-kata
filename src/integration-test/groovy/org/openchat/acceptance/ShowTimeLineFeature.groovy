@@ -2,11 +2,11 @@ package org.openchat.acceptance
 
 
 import com.tngtech.jgiven.spock.ScenarioSpec
-import org.openchat.acceptance.stages.Given
+import org.openchat.acceptance.stages.GivenUser
 import org.openchat.acceptance.stages.ThenPost
 import org.openchat.acceptance.stages.WhenPost
 
-class ShowTimelineFeature extends ScenarioSpec<Given,WhenPost, ThenPost> {
+class ShowTimelineFeature extends ScenarioSpec<GivenUser, WhenPost, ThenPost> {
 
     def "should show user's timeline"() {
         expect:

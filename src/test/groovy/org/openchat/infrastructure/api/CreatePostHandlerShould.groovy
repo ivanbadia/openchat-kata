@@ -16,7 +16,6 @@ import java.time.LocalDateTime
 import static ratpack.http.MediaType.APPLICATION_JSON
 
 class CreatePostHandlerShould extends Specification {
-
     private static final String POST_TEXT = "Hello World!!!"
     private static final String USER_ID = UUID.randomUUID().toString()
     private static final POST = PostBuilder.aPost()

@@ -2,14 +2,13 @@ package org.openchat.acceptance.stages
 
 import com.tngtech.jgiven.Stage
 import com.tngtech.jgiven.annotation.ProvidedScenarioState
-import org.openchat.acceptance.stages.clients.PostsClient
 import org.openchat.acceptance.stages.clients.RegistrationClient
 import ratpack.http.client.ReceivedResponse
 
 import static org.openchat.acceptance.stages.UserBuilder.anUser
+import static org.openchat.acceptance.stages.clients.PostsClient.createPost
 
-
-class Given extends Stage<Given> {
+class GivenUser extends Stage<GivenUser> {
     @ProvidedScenarioState
     private User user
     @ProvidedScenarioState
@@ -29,7 +28,7 @@ class Given extends Stage<Given> {
     }
 
     def post(String postText) {
-        PostsClient.createPost user.id, postText
+        createPost user.id, postText
         posts.add(postText)
         self()
     }

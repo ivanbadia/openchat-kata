@@ -1,16 +1,11 @@
 package org.openchat
 
-import org.openchat.application.usecases.createPost
-import org.openchat.application.usecases.loginUser
-import org.openchat.application.usecases.registerUser
-import org.openchat.application.usecases.retrieveTimeline
+import org.openchat.application.usecases.*
 import org.openchat.domain.post.Clock
 import org.openchat.domain.post.InappropriateLanguageDetector
 import org.openchat.domain.post.Post
-import org.openchat.infrastructure.api.LoginHandler
-import org.openchat.infrastructure.api.CreatePostHandler
-import org.openchat.infrastructure.api.RegisterUserHandler
-import org.openchat.infrastructure.api.TimelineHandler
+import org.openchat.infrastructure.api.*
+import org.openchat.infrastructure.persistence.InMemoryFollowingRepository
 import org.openchat.infrastructure.persistence.InMemoryPostRepository
 import org.openchat.infrastructure.persistence.InMemoryUserRepository
 import ratpack.handling.RequestLogger
@@ -32,10 +27,12 @@ object OpenChatApp {
 
         val userRepository = InMemoryUserRepository()
         val postRepository = InMemoryPostRepository()
+        val followingRepository = InMemoryFollowingRepository()
         val registerUser = registerUser(userRepository)
         val loginUser = loginUser(userRepository)
         val createPost = createPost(postRepository, InappropriateLanguageDetector(), Clock())
         val retrieveTimeline = retrieveTimeline(postRepository)
+        val createFollowing = createFollowing(followingRepository)
 
         RatpackServer.start { server ->
             server
@@ -54,6 +51,7 @@ object OpenChatApp {
                                     }
 
                                 }
+                                .path("followings", CreateFollowingHandler(createFollowing))
                     }
 
         }
