@@ -7,7 +7,6 @@ import org.openchat.application.usecases.RegisterUserCmd
 import org.openchat.domain.user.User
 import org.openchat.domain.user.Username
 import org.openchat.domain.user.UsernameAlreadyInUse
-import ratpack.http.MediaType
 import ratpack.http.Status
 import ratpack.test.handling.HandlingResult
 import ratpack.test.handling.RequestFixture
@@ -17,10 +16,10 @@ import static org.openchat.builders.UserBuilder.anUser
 import static ratpack.http.MediaType.APPLICATION_JSON
 
 class RegisterUserHandlerShould extends Specification {
-    private static final String IVAN_PASSWORD = "password"
-    private static final User IVAN = anUser()
+    private static final String USER_PASSWORD = "password"
+    private static final User USER = anUser()
             .withUsername("ivan")
-            .withPassword(IVAN_PASSWORD)
+            .withPassword(USER_PASSWORD)
             .withAbout("about")
             .build()
 
@@ -29,20 +28,20 @@ class RegisterUserHandlerShould extends Specification {
         RegisterUserCmd capturedRegisterUserCmd = null
         def registerUser = { RegisterUserCmd registerUserCmd ->
             capturedRegisterUserCmd = registerUserCmd
-            new Either.Right<User>(IVAN)
+            new Either.Right<User>(USER)
         }
 
         when:
         HandlingResult result = RequestFixture.handle(
                 new RegisterUserHandler(registerUser),
-                { fixture -> fixture.body(jsonWith(IVAN), MediaType.APPLICATION_JSON) }
+                { fixture -> fixture.body(jsonWith(USER), APPLICATION_JSON) }
         )
 
         then:
         result.status == Status.CREATED
         result.headers["content-type"] == APPLICATION_JSON
-        result.bodyText == JsonOutput.toJson([userId: IVAN.id.asString(), username: IVAN.username.asString(), about: IVAN.about])
-        capturedRegisterUserCmd.properties == new RegisterUserCmd(IVAN.username.asString(), IVAN_PASSWORD, IVAN.about).properties
+        result.bodyText == JsonOutput.toJson([id: USER.id.asString(), username: USER.username.asString(), about: USER.about])
+        capturedRegisterUserCmd.properties == new RegisterUserCmd(USER.username.asString(), USER_PASSWORD, USER.about).properties
     }
 
     def "fail if username is already in use"() {
@@ -54,7 +53,7 @@ class RegisterUserHandlerShould extends Specification {
         when:
         HandlingResult result = RequestFixture.handle(
                 new RegisterUserHandler(registerUser),
-                { fixture -> fixture.body(jsonWith(IVAN), MediaType.APPLICATION_JSON) }
+                { fixture -> fixture.body(jsonWith(USER), APPLICATION_JSON) }
         )
 
         then:
@@ -65,7 +64,7 @@ class RegisterUserHandlerShould extends Specification {
     String jsonWith(User user) {
         def objectNode = new ObjectMapper().createObjectNode()
         objectNode.put("username", user.username.asString())
-        objectNode.put("password", IVAN_PASSWORD)
+        objectNode.put("password", USER_PASSWORD)
         objectNode.put("about", user.about)
         objectNode.toPrettyString()
 

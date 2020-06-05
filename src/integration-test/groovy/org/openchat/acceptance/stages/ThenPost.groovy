@@ -35,10 +35,10 @@ class ThenPost extends Stage<ThenPost> {
         new JsonSlurper().parseText(json)
     }
 
-    def the_user_sees_his_posts_in_reverse_chronological_order() {
+    def the_posts_are_shown_in_reverse_chronological_order() {
         assert response.status == OK
         assert response.body.contentType.type == MediaType.APPLICATION_JSON
-        def retrievedPosts = parseJson(response.body.text)
+        List retrievedPosts = parseJson(response.body.text) as List
         assert retrievedPosts.size() == posts.size()
         def reversedPosts = posts.reverse()
         for (int i = 0; i < posts.size(); i++) {

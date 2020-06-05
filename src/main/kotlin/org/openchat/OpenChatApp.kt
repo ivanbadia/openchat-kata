@@ -3,7 +3,6 @@ package org.openchat
 import org.openchat.application.usecases.*
 import org.openchat.domain.post.Clock
 import org.openchat.domain.post.InappropriateLanguageDetector
-import org.openchat.domain.post.Post
 import org.openchat.infrastructure.api.*
 import org.openchat.infrastructure.persistence.InMemoryFollowingRepository
 import org.openchat.infrastructure.persistence.InMemoryPostRepository
@@ -28,11 +27,13 @@ object OpenChatApp {
         val userRepository = InMemoryUserRepository()
         val postRepository = InMemoryPostRepository()
         val followingRepository = InMemoryFollowingRepository()
+
         val registerUser = registerUser(userRepository)
         val loginUser = loginUser(userRepository)
         val createPost = createPost(postRepository, InappropriateLanguageDetector(), Clock())
         val retrieveTimeline = retrieveTimeline(postRepository)
         val createFollowing = createFollowing(followingRepository)
+        val getFollowees = getFollowees(followingRepository, userRepository)
 
         RatpackServer.start { server ->
             server
@@ -51,7 +52,8 @@ object OpenChatApp {
                                     }
 
                                 }
-                                .path("followings", CreateFollowingHandler(createFollowing))
+                                .post("followings", CreateFollowingHandler(createFollowing))
+                                .get("followings/:followerId/followees", GetFolloweesHandler(getFollowees))
                     }
 
         }

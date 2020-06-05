@@ -15,5 +15,8 @@ class FollowingClient {
                 .post("/followings")
     }
 
-
+    public static def retrieveFolloweesBy = { String followerId ->
+        return OpenChat.app.httpClient
+                .get("/followings/$followerId/followees")
+    }
 }

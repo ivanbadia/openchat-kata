@@ -15,6 +15,6 @@ class ShowTimelineFeature extends ScenarioSpec<GivenUser, WhenPost, ThenPost> {
                 .and().post("Second post")
                 .and().post("Third post")
         when().the_user_checks_his_timeline()
-        then().the_user_sees_his_posts_in_reverse_chronological_order()
+        then().the_posts_are_shown_in_reverse_chronological_order()
     }
 }

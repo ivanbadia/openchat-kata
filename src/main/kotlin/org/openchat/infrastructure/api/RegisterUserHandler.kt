@@ -4,8 +4,6 @@ import arrow.core.Either
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.openchat.application.usecases.RegisterUserCmd
-import org.openchat.domain.post.InappropriateLanguage
-import org.openchat.domain.post.Post
 import org.openchat.domain.user.User
 import org.openchat.domain.user.UsernameAlreadyInUse
 import org.openchat.infrastructure.api.json.toJson

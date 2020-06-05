@@ -31,13 +31,10 @@ class ThenUser extends Stage<ThenUser> {
 
     private void assertThatBodyContainsUser() {
         assert response.body.contentType.type == MediaType.APPLICATION_JSON
-        def createdUser = parseJson(response.body.text)
-        assert createdUser.userId ==~ UUID_PATTERN
+        def createdUser = new JsonSlurper().parseText(response.body.text)
+        assert createdUser.id ==~ UUID_PATTERN
         assert createdUser.username == user.username
         assert createdUser.about == user.about
     }
 
-    private Object parseJson(String json) {
-        new JsonSlurper().parseText(json)
     }
-}

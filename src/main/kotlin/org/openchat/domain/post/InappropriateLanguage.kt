@@ -1,5 +1,3 @@
 package org.openchat.domain.post
 
-class InappropriateLanguage {
-
-}
+class InappropriateLanguage

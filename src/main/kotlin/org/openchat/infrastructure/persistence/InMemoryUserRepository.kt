@@ -24,4 +24,9 @@ class InMemoryUserRepository : UserRepository {
         return Option.fromNullable(usersByUsername[credentials.username])
                 .filter { user -> user.has(credentials) }
     }
+
+    override fun get(userIds: List<UserId>): List<User> {
+        return usersByUsername.values
+                .filter { user -> userIds.contains(user.id) }
+    }
 }

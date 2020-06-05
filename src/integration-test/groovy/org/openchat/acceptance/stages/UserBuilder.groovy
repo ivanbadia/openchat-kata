@@ -10,10 +10,21 @@ class UserBuilder {
         return new UserBuilder()
     }
 
+    def withId(String id) {
+        this.id = id
+        return this
+    }
+
     def withUsername(String username) {
         this.username = username
         return this
     }
+
+    def withAbout(String about) {
+        this.about = about
+        return this
+    }
+
 
     User build() {
         return new User(id, username, password, about)

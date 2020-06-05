@@ -7,4 +7,5 @@ interface UserRepository {
     fun add(user: User)
     fun isUsernameInUse(username : Username) : Boolean
     fun userWith(credentials: Credentials): Option<User>
+    fun get(userIds: List<UserId>): List<User>
 }

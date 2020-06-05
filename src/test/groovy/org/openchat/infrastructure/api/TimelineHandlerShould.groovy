@@ -37,7 +37,6 @@ class TimelineHandlerShould extends Specification {
         then:
         result.status == Status.OK
         result.headers["content-type"] == APPLICATION_JSON
-        result.bodyText == JsonOutput.toJson([[postId: POST.id.asString(), text: POST.text, userId: USER_ID, text: POST.text, dateTime: "2020-06-02T16:04:00Z"]])
-
+        result.bodyText == JsonOutput.toJson([[postId: POST.id.asString(), text: POST.text, userId: USER_ID, dateTime: "2020-06-02T16:04:00Z"]])
     }
 }

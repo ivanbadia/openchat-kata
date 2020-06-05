@@ -47,6 +47,17 @@ class InMemoryUserRepositoryShould extends Specification {
         userRepository.userWith(UNKNOWN_USER_CREDENTIALS) == Option.@Companion.empty()
         userRepository.userWith(IVAN_CREDENTIALS_WITH_INVALID_PASSWORD) == Option.@Companion.empty()
         userRepository.userWith(IVAN_CREDENTIALS) == Option.@Companion.just(IVAN)
+    }
 
+    def "return users by ids"() {
+        given:
+        userRepository.add(PABLO)
+        userRepository.add(IVAN)
+
+        when:
+        def users = userRepository.get([PABLO.id, IVAN.id])
+
+        then:
+        users == [PABLO, IVAN]
     }
 }

@@ -6,21 +6,25 @@ import com.tngtech.jgiven.annotation.ProvidedScenarioState
 import ratpack.http.client.ReceivedResponse
 
 import static org.openchat.acceptance.stages.clients.FollowingClient.createFollowing
+import static org.openchat.acceptance.stages.clients.FollowingClient.retrieveFolloweesBy
 
 class WhenFollowing  extends Stage<WhenFollowing> {
     @ExpectedScenarioState
-    private List<User> users
+    private List<User> registeredUsers
     @ProvidedScenarioState
     private ReceivedResponse response
 
-    private usernameEqualTo = { String followerUsername ->
-        return { user -> user.username == followerUsername }
+    def $_follows_$(String followerUsername, String followeeUsername) {
+        response = createFollowing userIdFor(followerUsername), userIdFor(followeeUsername)
+        self()
     }
 
-    def $_follows_$(String followerUsername, String followeeUsername) {
-        String followerId = users.find(usernameEqualTo(followerUsername)).id
-        String followeeId = users.find(usernameEqualTo(followeeUsername)).id
-        response = createFollowing followerId, followeeId
+    def $_checks_the_followees(String username) {
+        response = retrieveFolloweesBy userIdFor(username)
         self()
+    }
+
+    private String userIdFor(String followerUsername) {
+        registeredUsers.find({ user -> user.username == followerUsername }).id
     }
 }

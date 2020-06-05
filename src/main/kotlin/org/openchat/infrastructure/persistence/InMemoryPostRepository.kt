@@ -5,7 +5,6 @@ import org.openchat.domain.post.PostId
 import org.openchat.domain.post.PostRepository
 import org.openchat.domain.user.UserId
 import java.util.*
-import kotlin.collections.ArrayList
 
 class InMemoryPostRepository : PostRepository {
     private val posts = mutableListOf<Post>()

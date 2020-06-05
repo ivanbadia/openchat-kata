@@ -37,7 +37,7 @@ class LoginHandlerShould extends Specification {
         then:
         result.status == Status.OK
         result.headers["content-type"] == APPLICATION_JSON
-        result.bodyText == JsonOutput.toJson([userId: IVAN.id.asString(), username: IVAN_USERNAME, about: IVAN.about])
+        result.bodyText == JsonOutput.toJson([id: IVAN.id.asString(), username: IVAN_USERNAME, about: IVAN.about])
     }
 
     def "fail if credentials are not valid"() {

@@ -2,6 +2,7 @@ package org.openchat.infrastructure.persistence
 
 import org.openchat.domain.following.Following
 import org.openchat.domain.following.FollowingRepository
+import org.openchat.domain.user.UserId
 
 class InMemoryFollowingRepository : FollowingRepository {
     private val followings = mutableListOf<Following>()
@@ -12,6 +13,12 @@ class InMemoryFollowingRepository : FollowingRepository {
 
     override fun exists(following: Following) : Boolean{
         return followings.any {addedFollowing -> addedFollowing == following }
+    }
+
+    override fun followeesBy(followerId: UserId): List<UserId> {
+        return followings
+                .filter { following -> following.followerId == followerId }
+                .map(Following::followeeId)
     }
 
 }

@@ -3,9 +3,7 @@ package org.openchat.infrastructure.api
 import arrow.core.Option
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.openchat.domain.user.Credentials
 import org.openchat.domain.user.User
-import org.openchat.domain.user.Username
 import org.openchat.infrastructure.api.json.toJson
 import ratpack.handling.Context
 import ratpack.handling.Handler
