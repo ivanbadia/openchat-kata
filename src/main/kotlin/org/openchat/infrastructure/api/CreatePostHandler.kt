@@ -2,9 +2,9 @@ package org.openchat.infrastructure.api
 
 import arrow.core.Either
 import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.openchat.domain.post.InappropriateLanguage
 import org.openchat.domain.post.Post
+import org.openchat.infrastructure.api.json.getObjectMapper
 import org.openchat.infrastructure.api.json.toJson
 import ratpack.handling.Context
 import ratpack.handling.Handler
@@ -38,7 +38,7 @@ class CreatePostHandler(private val registerPost: (String, String) -> Either<Ina
         return { post ->
             ctx.response.status(Status.CREATED)
                     .contentType(MediaType.APPLICATION_JSON)
-            ctx.response.send(post.toJson(ctx.get(ObjectMapper::class.java)))
+            ctx.response.send(post.toJson(ctx.getObjectMapper()))
         }
     }
 

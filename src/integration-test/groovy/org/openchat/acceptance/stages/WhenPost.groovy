@@ -26,4 +26,5 @@ class WhenPost extends Stage<WhenPost> {
         response = retrieveTimelineFor user.id
         self()
     }
+
 }

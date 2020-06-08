@@ -6,12 +6,11 @@ import groovy.json.JsonSlurper
 import ratpack.http.MediaType
 import ratpack.http.client.ReceivedResponse
 
+import static org.openchat.acceptance.stages.RegularExpressions.UUID_PATTERN
 import static ratpack.http.Status.CREATED
 import static ratpack.http.Status.OK
 
 class ThenUser extends Stage<ThenUser> {
-    private static final def UUID_PATTERN = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
-
     @ExpectedScenarioState
     private User user
     @ExpectedScenarioState

@@ -2,8 +2,8 @@ package org.openchat.infrastructure.api
 
 import arrow.core.Option
 import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.openchat.domain.user.User
+import org.openchat.infrastructure.api.json.getObjectMapper
 import org.openchat.infrastructure.api.json.toJson
 import ratpack.handling.Context
 import ratpack.handling.Handler
@@ -30,7 +30,7 @@ class LoginHandler(private val loginUser: (String, String) -> Option<User>) : Ha
         return { user ->
             ctx.response.status(Status.OK)
                     .contentType(MediaType.APPLICATION_JSON)
-            ctx.response.send(user.toJson(ctx.get(ObjectMapper::class.java)))
+            ctx.response.send(user.toJson(ctx.getObjectMapper()))
         }
     }
 

@@ -2,10 +2,10 @@ package org.openchat.infrastructure.api
 
 import arrow.core.Either
 import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.openchat.application.usecases.RegisterUserCmd
 import org.openchat.domain.user.User
 import org.openchat.domain.user.UsernameAlreadyInUse
+import org.openchat.infrastructure.api.json.getObjectMapper
 import org.openchat.infrastructure.api.json.toJson
 import ratpack.handling.Context
 import ratpack.handling.Handler
@@ -45,7 +45,7 @@ class RegisterUserHandler(private val registerUser: (RegisterUserCmd) -> Either<
         return { user ->
             ctx.response.status(CREATED)
                     .contentType(APPLICATION_JSON)
-            ctx.response.send(user.toJson(ctx.get(ObjectMapper::class.java)))
+            ctx.response.send(user.toJson(ctx.getObjectMapper()))
         }
     }
 

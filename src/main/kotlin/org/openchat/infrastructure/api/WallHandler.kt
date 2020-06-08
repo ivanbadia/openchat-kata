@@ -5,14 +5,14 @@ import org.openchat.infrastructure.api.json.getObjectMapper
 import org.openchat.infrastructure.api.json.toJson
 import ratpack.handling.Context
 import ratpack.handling.Handler
-import ratpack.http.MediaType.APPLICATION_JSON
-import ratpack.http.Status.OK
+import ratpack.http.MediaType
+import ratpack.http.Status
 
-class TimelineHandler(val retrieveTimeline: (userId : String) -> List<Post>) : Handler {
+class WallHandler(private val retrieveWall: (String) -> List<Post>) : Handler{
     override fun handle(ctx: Context) {
-        val posts = retrieveTimeline(ctx.pathTokens["userId"]!!)
-        ctx.response.status(OK)
-                .contentType(APPLICATION_JSON)
+        val posts = retrieveWall(ctx.pathTokens["userId"]!!)
+        ctx.response.status(Status.OK)
+                .contentType(MediaType.APPLICATION_JSON)
                 .send(posts.toJson(ctx.getObjectMapper()))
     }
 

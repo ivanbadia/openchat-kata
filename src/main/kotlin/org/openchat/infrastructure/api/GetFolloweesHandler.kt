@@ -1,7 +1,7 @@
 package org.openchat.infrastructure.api
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.openchat.domain.user.User
+import org.openchat.infrastructure.api.json.getObjectMapper
 import org.openchat.infrastructure.api.json.toJson
 import ratpack.handling.Context
 import ratpack.handling.Handler
@@ -13,7 +13,7 @@ class GetFolloweesHandler(val getFollowees: (String) -> List<User>) : Handler{
         val followees = getFollowees(ctx.pathTokens["followerId"]!!)
         ctx.response.status(Status.OK)
                 .contentType(APPLICATION_JSON)
-                .send(followees.toJson(ctx.get(ObjectMapper::class.java)))
+                .send(followees.toJson(ctx.getObjectMapper()))
     }
 
 }

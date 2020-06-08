@@ -15,9 +15,13 @@ class PostsClient {
                 .post("/users/$userId/timeline")
     }
 
-
     public static def retrieveTimelineFor = { String userId ->
         return OpenChat.app.httpClient
                 .get("/users/$userId/timeline")
+    }
+
+    public static def retrieveWallFor = { String userId ->
+        return OpenChat.app.httpClient
+                .get("/users/$userId/wall")
     }
 }

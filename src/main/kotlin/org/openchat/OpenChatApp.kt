@@ -34,6 +34,7 @@ object OpenChatApp {
         val retrieveTimeline = retrieveTimeline(postRepository)
         val createFollowing = createFollowing(followingRepository)
         val getFollowees = getFollowees(followingRepository, userRepository)
+        val retrieveWall = retrieveWall(followingRepository, postRepository)
 
         RatpackServer.start { server ->
             server
@@ -54,6 +55,7 @@ object OpenChatApp {
                                 }
                                 .post("followings", CreateFollowingHandler(createFollowing))
                                 .get("followings/:followerId/followees", GetFolloweesHandler(getFollowees))
+                                .get("users/:userId/wall", WallHandler(retrieveWall))
                     }
 
         }

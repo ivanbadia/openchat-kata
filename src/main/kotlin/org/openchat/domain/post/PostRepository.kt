@@ -6,4 +6,5 @@ interface PostRepository {
     fun nextId() : PostId
     fun add(post: Post)
     fun allBy(userId: UserId): List<Post>
+    fun allBy(userIds: List<UserId>): List<Post>
 }

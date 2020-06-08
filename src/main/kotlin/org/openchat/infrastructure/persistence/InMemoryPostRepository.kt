@@ -23,6 +23,13 @@ class InMemoryPostRepository : PostRepository {
                 .reversed()
     }
 
+    override fun allBy(userIds: List<UserId>): List<Post> {
+        return posts
+                .filter(userIdIn(userIds))
+                .reversed()
+    }
+
     private fun userIdEqualTo(userId: UserId) = { post : Post -> post.userId == userId }
 
+    private fun userIdIn(userIds: List<UserId>) = { post : Post -> userIds.contains(post.userId)}
 }

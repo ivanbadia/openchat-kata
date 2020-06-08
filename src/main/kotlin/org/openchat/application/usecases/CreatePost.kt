@@ -18,5 +18,4 @@ fun createPost(postRepository: PostRepository,
             val post = Post(postRepository.nextId(), UserId(userId), text, clock.now())
             postRepository.add(post)
             post.right()
-
         }

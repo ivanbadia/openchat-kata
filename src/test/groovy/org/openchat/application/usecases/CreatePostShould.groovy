@@ -15,7 +15,7 @@ class CreatePostShould extends Specification {
     private static final String USER_ID = UUID.randomUUID().toString()
     private static final String POST_ID = UUID.randomUUID().toString()
     private static final String POST_TEXT = "Hi!"
-    private static final LocalDateTime CURRENT_TIME = LocalDateTime.now();
+    private static final LocalDateTime CURRENT_TIME = LocalDateTime.now()
     private InappropriateLanguageDetector inappropriateLanguageDetector = new InappropriateLanguageDetector()
 
 
