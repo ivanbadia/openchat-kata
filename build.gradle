@@ -1,7 +1,7 @@
 plugins {
     id "base"
     id "org.jetbrains.kotlin.jvm" version "1.3.72"
-    id 'com.tngtech.jgiven.gradle-plugin' version "1.0.0-RC7"
+    id 'com.tngtech.jgiven.gradle-plugin' version "1.0.0"
 }
 
 apply plugin: 'kotlin'
@@ -19,7 +19,7 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
 }
 
 ext {
-    jGivenVersion = '0.18.2'
+    jGivenVersion = '1.0.0'
     ratpackVersion = '1.8.0'
 }
 
@@ -36,7 +36,6 @@ dependencies {
     testRuntime "org.objenesis:objenesis:3.1"
     testRuntime "net.bytebuddy:byte-buddy:1.10.10"
     testImplementation "com.tngtech.jgiven:jgiven-core:$jGivenVersion"
-    implementation "org.spockframework:spock-junit4:2.0-M4-groovy-2.5"
     testImplementation "com.tngtech.jgiven:jgiven-html5-report:$jGivenVersion"
     testImplementation "com.tngtech.jgiven:jgiven-spock:$jGivenVersion"
     testImplementation "io.ratpack:ratpack-groovy-test:$ratpackVersion"
@@ -53,6 +52,5 @@ compileTestGroovy {
 }
 
 test {
-    useJUnitPlatform()
     test.finalizedBy jgivenTestReport
 }
