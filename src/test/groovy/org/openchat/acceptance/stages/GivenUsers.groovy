@@ -24,7 +24,7 @@ class GivenUsers extends Stage<GivenUsers> {
         self()
     }
 
-    def users(List<String> usernames) {
+    def users(String[] usernames) {
         usernames.each {username -> user(username)}
         self()
     }

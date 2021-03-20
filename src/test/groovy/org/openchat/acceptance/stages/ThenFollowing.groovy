@@ -20,7 +20,7 @@ class ThenFollowing extends Stage<ThenFollowing> {
         return self()
     }
 
-    def the_users_shown_are(List<String> usernames) {
+    def the_users_shown_are(String[] usernames) {
         assert response.status == OK
         assert response.body.contentType.type == MediaType.APPLICATION_JSON
 
@@ -41,7 +41,7 @@ class ThenFollowing extends Stage<ThenFollowing> {
         }
     }
 
-    private Closure usernameIsIn(List<String> usernames) {
+    private Closure usernameIsIn(String[] usernames) {
         { user -> usernames.contains(user.username) }
     }
 }

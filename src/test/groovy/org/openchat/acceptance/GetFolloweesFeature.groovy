@@ -19,6 +19,6 @@ class GetFolloweesFeature extends ScenarioSpec<GivenUsers, WhenFollowing, ThenFo
                 .and()
                 .$_follows_$("biel", "martin")
         when().$_checks_the_followees("biel")
-        then().the_users_shown_are(["teo", "martin"])
+        then().the_users_shown_are("teo", "martin")
     }
 }
