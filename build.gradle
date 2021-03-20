@@ -1,6 +1,7 @@
 plugins {
     id "base"
     id "org.jetbrains.kotlin.jvm" version "1.3.72"
+    id 'com.tngtech.jgiven.gradle-plugin' version "1.0.0-RC7"
 }
 
 apply plugin: 'kotlin'
@@ -16,27 +17,6 @@ targetCompatibility = JavaVersion.VERSION_11
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
     kotlinOptions.jvmTarget = JavaVersion.VERSION_11
 }
-
-sourceSets {
-    integrationTest {
-        groovy.srcDir "$projectDir/src/integration-test/groovy"
-        resources.srcDir "$projectDir/src/integration-test/resources"
-        compileClasspath += main.output + test.output
-        runtimeClasspath += main.output + test.output
-    }
-}
-
-configurations {
-    integrationTestImplementation.extendsFrom testImplementation
-    integrationTestRuntime.extendsFrom testRuntime
-}
-
-task integrationTest(type: Test) {
-    testClassesDirs = sourceSets.integrationTest.output.classesDirs
-    classpath = sourceSets.integrationTest.runtimeClasspath
-}
-
-check.dependsOn integrationTest
 
 ext {
     jGivenVersion = '0.18.2'
@@ -55,11 +35,11 @@ dependencies {
     testImplementation "org.codehaus.groovy:groovy-all:2.5.4"
     testRuntime "org.objenesis:objenesis:3.1"
     testRuntime "net.bytebuddy:byte-buddy:1.10.10"
-
-    integrationTestImplementation "com.tngtech.jgiven:jgiven-core:$jGivenVersion"
-    integrationTestImplementation "com.tngtech.jgiven:jgiven-html5-report:$jGivenVersion"
-    integrationTestImplementation "com.tngtech.jgiven:jgiven-spock:$jGivenVersion"
-    integrationTestImplementation "io.ratpack:ratpack-groovy-test:$ratpackVersion"
+    testImplementation "com.tngtech.jgiven:jgiven-core:$jGivenVersion"
+    implementation "org.spockframework:spock-junit4:2.0-M4-groovy-2.5"
+    testImplementation "com.tngtech.jgiven:jgiven-html5-report:$jGivenVersion"
+    testImplementation "com.tngtech.jgiven:jgiven-spock:$jGivenVersion"
+    testImplementation "io.ratpack:ratpack-groovy-test:$ratpackVersion"
 }
 
 compileGroovy {
@@ -70,4 +50,9 @@ compileGroovy {
 compileTestGroovy {
     dependsOn tasks.getByPath('compileTestKotlin')
     classpath += files(compileTestKotlin.destinationDir)
+}
+
+test {
+    useJUnitPlatform()
+    test.finalizedBy jgivenTestReport
 }
