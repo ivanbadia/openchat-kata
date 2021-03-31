@@ -12,8 +12,6 @@ class GivenUser extends Stage<GivenUser> {
     @ProvidedScenarioState
     private User user
     @ProvidedScenarioState
-    private ReceivedResponse response
-    @ProvidedScenarioState
     private List<String> posts = []
 
     def an_unregistered_user() {
@@ -23,7 +21,7 @@ class GivenUser extends Stage<GivenUser> {
 
     def a_registered_user() {
         user = anUser().build()
-        response = register user
+        register user
         self()
     }
 

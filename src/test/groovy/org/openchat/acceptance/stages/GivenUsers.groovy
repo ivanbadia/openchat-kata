@@ -13,7 +13,7 @@ class GivenUsers extends Stage<GivenUsers> {
     @ProvidedScenarioState
     private List<User> registeredUsers = []
 
-    def user(String username) {
+    def an_user(String username) {
         def response = register anUser().withUsername(username).build()
         def createdUser = new JsonSlurper().parseText(response.body.text)
         registeredUsers.add anUser()
@@ -25,7 +25,7 @@ class GivenUsers extends Stage<GivenUsers> {
     }
 
     def users(String[] usernames) {
-        usernames.each {username -> user(username)}
+        usernames.each {username -> an_user(username)}
         self()
     }
 

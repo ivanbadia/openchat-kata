@@ -9,9 +9,9 @@ class CreateFollowingFeature extends ScenarioSpec<GivenUsers, WhenFollowing, The
 
     def "should create following"() {
         expect:
-        given().user("pablo")
+        given().an_user("pablo")
                 .and()
-                .user("juan")
+                .an_user("juan")
         when().$_follows_$("pablo", "juan")
         then().the_following_is_created()
     }

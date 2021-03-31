@@ -2,6 +2,7 @@ package org.openchat.acceptance.stages
 
 import com.tngtech.jgiven.Stage
 import com.tngtech.jgiven.annotation.ExpectedScenarioState
+import com.tngtech.jgiven.annotation.Quoted
 import groovy.json.JsonSlurper
 import ratpack.http.MediaType
 import ratpack.http.client.ReceivedResponse
@@ -11,8 +12,6 @@ import static ratpack.http.Status.OK
 
 class ThenFollowing extends Stage<ThenFollowing> {
     @ExpectedScenarioState
-    private List<User> registeredUsers
-    @ExpectedScenarioState
     ReceivedResponse response
 
     def the_following_is_created() {
@@ -20,29 +19,17 @@ class ThenFollowing extends Stage<ThenFollowing> {
         return self()
     }
 
-    def the_users_shown_are(String[] usernames) {
+    def the_users_displayed_are(String[] usernames) {
         assert response.status == OK
         assert response.body.contentType.type == MediaType.APPLICATION_JSON
 
-        List followees = new JsonSlurper().parseText(response.body.text) as List
+        def followees = new JsonSlurper().parseText(response.body.text)
         assert followees.size() == usernames.size()
-        this.registeredUsers.find(usernameIsIn(usernames))
-                .each(assertThatIsIn(followees))
+        followees.stream()
+                .map({ it.username })
+                .each { assert usernames.contains(it) }
         return self()
     }
 
-    private Closure assertThatIsIn(List followees) {
-        {
-            user ->
-                def followee = followees.find { followee -> followee.username == user.username }
-                assert followee != null
-                assert followee.id == user.id
-                assert followee.about == user.about
-        }
-    }
-
-    private Closure usernameIsIn(String[] usernames) {
-        { user -> usernames.contains(user.username) }
-    }
 }
 

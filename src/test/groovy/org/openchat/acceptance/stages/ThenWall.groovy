@@ -14,7 +14,7 @@ class ThenWall extends Stage<ThenWall> {
     @ProvidedScenarioState
     private ReceivedResponse response
 
-    def the_posts_shown_are(String[] posts) {
+    def the_posts_displayed_are(String[] posts) {
         assert response.status == OK
         assert response.body.contentType.type == MediaType.APPLICATION_JSON
         List retrievedPosts = new JsonSlurper().parseText(response.body.text) as List

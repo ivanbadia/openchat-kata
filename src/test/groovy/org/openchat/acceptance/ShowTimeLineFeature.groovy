@@ -8,7 +8,7 @@ import org.openchat.acceptance.stages.WhenPost
 
 class ShowTimelineFeature extends ScenarioSpec<GivenUser, WhenPost, ThenPost> {
 
-    def "should show user's timeline"() {
+    def "show user's timeline"() {
         expect:
         given().a_registered_user()
                 .with().post("First post")

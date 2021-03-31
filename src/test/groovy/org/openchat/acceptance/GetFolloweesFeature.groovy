@@ -7,18 +7,15 @@ import org.openchat.acceptance.stages.WhenFollowing
 
 class GetFolloweesFeature extends ScenarioSpec<GivenUsers, WhenFollowing, ThenFollowing> {
 
-    def "should return followees by user"() {
+    def "return all followees for a given user"() {
         expect:
-        given().user("biel")
+
+        given().users("biel", "sonia", "martin")
                 .and()
-                .user("teo")
-                .and()
-                .user("martin")
-                .and()
-                .$_follows_$("biel", "teo")
+                .$_follows_$("biel", "sonia")
                 .and()
                 .$_follows_$("biel", "martin")
         when().$_checks_the_followees("biel")
-        then().the_users_shown_are("teo", "martin")
+        then().the_users_displayed_are("sonia", "martin")
     }
 }
