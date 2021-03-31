@@ -15,13 +15,13 @@ class WhenFollowing  extends Stage<WhenFollowing> {
     @ProvidedScenarioState
     private ReceivedResponse response
 
-    def $_follows_$(String followerUsername, String followeeUsername) {
-        response = createFollowing userIdFor(followerUsername), userIdFor(followeeUsername)
+    def $_checks_the_followees(@Quoted String username) {
+        response = retrieveFolloweesBy userIdFor(username)
         self()
     }
 
-    def $_checks_the_followees(@Quoted String username) {
-        response = retrieveFolloweesBy userIdFor(username)
+    def $_follows_$(String followerUsername, String followeeUsername) {
+        response = createFollowing userIdFor(followerUsername), userIdFor(followeeUsername)
         self()
     }
 
