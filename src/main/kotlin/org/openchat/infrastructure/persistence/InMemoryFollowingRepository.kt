@@ -1,10 +1,8 @@
 package org.openchat.infrastructure.persistence
 
-import arrow.core.extensions.list.foldable.toList
 import org.openchat.domain.following.Following
 import org.openchat.domain.following.FollowingRepository
 import org.openchat.domain.user.UserId
-import java.util.*
 
 class InMemoryFollowingRepository : FollowingRepository {
     private val followings = mutableListOf<Following>()

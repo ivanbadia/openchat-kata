@@ -10,12 +10,12 @@ class GetFolloweesFeature extends ScenarioSpec<GivenUsers, WhenFollowing, ThenFo
     def "return all followees for a given user"() {
         expect:
 
-        given().users("biel", "sonia", "martin")
+        given().users("biel", "rebeca", "sonia")
+                .and()
+                .$_follows_$("biel", "rebeca")
                 .and()
                 .$_follows_$("biel", "sonia")
-                .and()
-                .$_follows_$("biel", "martin")
         when().$_checks_the_followees("biel")
-        then().the_users_displayed_are("sonia", "martin")
+        then().the_users_returned_are("rebeca", "sonia")
     }
 }
