@@ -2,7 +2,9 @@ package org.openchat.acceptance.stages
 
 import com.tngtech.jgiven.Stage
 import com.tngtech.jgiven.annotation.ProvidedScenarioState
+import com.tngtech.jgiven.annotation.Table
 import groovy.json.JsonSlurper
+import org.openchat.acceptance.formatters.ArrayFormat
 import ratpack.http.MediaType
 import ratpack.http.client.ReceivedResponse
 
@@ -14,7 +16,7 @@ class ThenWall extends Stage<ThenWall> {
     @ProvidedScenarioState
     private ReceivedResponse response
 
-    def the_posts_displayed_are(String[] posts) {
+    def the_posts_displayed_are(@ArrayFormat String[] posts) {
         assert response.status == OK
         assert response.body.contentType.type == MediaType.APPLICATION_JSON
         List retrievedPosts = new JsonSlurper().parseText(response.body.text) as List

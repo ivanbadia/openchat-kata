@@ -3,6 +3,7 @@ package org.openchat.acceptance.stages
 import com.tngtech.jgiven.Stage
 import com.tngtech.jgiven.annotation.ExpectedScenarioState
 import com.tngtech.jgiven.annotation.ProvidedScenarioState
+import com.tngtech.jgiven.annotation.Quoted
 import ratpack.http.client.ReceivedResponse
 
 import static org.openchat.acceptance.stages.clients.FollowingClient.createFollowing
@@ -19,7 +20,7 @@ class WhenFollowing  extends Stage<WhenFollowing> {
         self()
     }
 
-    def $_checks_the_followees(String username) {
+    def $_checks_the_followees(@Quoted String username) {
         response = retrieveFolloweesBy userIdFor(username)
         self()
     }

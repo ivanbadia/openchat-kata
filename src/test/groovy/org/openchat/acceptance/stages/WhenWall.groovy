@@ -3,6 +3,7 @@ package org.openchat.acceptance.stages
 import com.tngtech.jgiven.Stage
 import com.tngtech.jgiven.annotation.ExpectedScenarioState
 import com.tngtech.jgiven.annotation.ProvidedScenarioState
+import com.tngtech.jgiven.annotation.Quoted
 import ratpack.http.client.ReceivedResponse
 
 import static org.openchat.acceptance.stages.clients.PostsClient.retrieveWallFor
@@ -13,7 +14,7 @@ class WhenWall extends Stage<WhenWall> {
     @ProvidedScenarioState
     private ReceivedResponse response
 
-    def $_checks_the_wall(String username) {
+    def $_checks_the_wall(@Quoted String username) {
         response = retrieveWallFor userIdFor(username)
     }
 

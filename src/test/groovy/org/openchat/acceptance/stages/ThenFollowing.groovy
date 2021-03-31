@@ -2,8 +2,8 @@ package org.openchat.acceptance.stages
 
 import com.tngtech.jgiven.Stage
 import com.tngtech.jgiven.annotation.ExpectedScenarioState
-import com.tngtech.jgiven.annotation.Quoted
 import groovy.json.JsonSlurper
+import org.openchat.acceptance.formatters.ArrayFormat
 import ratpack.http.MediaType
 import ratpack.http.client.ReceivedResponse
 
@@ -19,7 +19,7 @@ class ThenFollowing extends Stage<ThenFollowing> {
         return self()
     }
 
-    def the_users_displayed_are(String[] usernames) {
+    def the_users_displayed_are(@ArrayFormat String[] usernames) {
         assert response.status == OK
         assert response.body.contentType.type == MediaType.APPLICATION_JSON
 
@@ -30,6 +30,5 @@ class ThenFollowing extends Stage<ThenFollowing> {
                 .each { assert usernames.contains(it) }
         return self()
     }
-
 }
 

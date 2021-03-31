@@ -2,7 +2,9 @@ package org.openchat.acceptance.stages
 
 import com.tngtech.jgiven.Stage
 import com.tngtech.jgiven.annotation.ProvidedScenarioState
+import com.tngtech.jgiven.annotation.Quoted
 import groovy.json.JsonSlurper
+import org.openchat.acceptance.formatters.ArrayFormat
 
 import static org.openchat.acceptance.stages.UserBuilder.anUser
 import static org.openchat.acceptance.stages.clients.FollowingClient.createFollowing
@@ -24,17 +26,17 @@ class GivenUsers extends Stage<GivenUsers> {
         self()
     }
 
-    def users(String[] usernames) {
+    def users(@ArrayFormat String[] usernames) {
         usernames.each {username -> an_user(username)}
         self()
     }
 
-    def $_follows_$(String followerUsername, String followeeUsername) {
+    def $_follows_$(@Quoted String followerUsername, @Quoted String followeeUsername) {
         createFollowing userIdFor(followerUsername), userIdFor(followeeUsername)
         self()
     }
 
-    def $_creates_a_new_post_with_text_$(String username, String post) {
+    def $_creates_a_new_post_with_text_$(@Quoted String username, @Quoted String post) {
         createPost userIdFor(username), post
         self()
     }
