@@ -5,7 +5,6 @@ import com.tngtech.jgiven.format.ArgumentFormatter
 
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
-import java.util.stream.Collectors
 
 import static java.util.stream.Collectors.joining
 
