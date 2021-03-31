@@ -7,7 +7,7 @@ import org.openchat.acceptance.stages.WhenUser
 
 class LoginFeature extends ScenarioSpec<GivenUser, WhenUser, ThenUser> {
 
-    def "should perform user login"() {
+    def "perform user login"() {
         expect:
         given().a_registered_user()
         when().the_user_performs_login()

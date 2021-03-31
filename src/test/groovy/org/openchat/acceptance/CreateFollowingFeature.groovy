@@ -7,7 +7,7 @@ import org.openchat.acceptance.stages.WhenFollowing
 
 class CreateFollowingFeature extends ScenarioSpec<GivenUsers, WhenFollowing, ThenFollowing> {
 
-    def "should create following"() {
+    def "create a following"() {
         expect:
         given().an_user("pablo")
                 .and()

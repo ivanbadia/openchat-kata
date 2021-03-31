@@ -33,15 +33,19 @@ class ThenPost extends Stage<ThenPost> {
     def the_posts_are_shown_in_reverse_chronological_order() {
         assert response.status == OK
         assert response.body.contentType.type == MediaType.APPLICATION_JSON
-        List retrievedPosts = new JsonSlurper().parseText(response.body.text) as List
-        assert retrievedPosts.size() == posts.size()
+        def retrievedPosts = new JsonSlurper().parseText(response.body.text)
+        containsCreatedPostsInReverseOrder(retrievedPosts)
+        self()
+    }
+
+    private void containsCreatedPostsInReverseOrder(retrievedPosts) {
         def reversedPosts = posts.reverse()
+        assert retrievedPosts.size() == posts.size()
         for (int i = 0; i < posts.size(); i++) {
             assert retrievedPosts[i].postId ==~ UUID_PATTERN
             assert retrievedPosts[i].userId == user.id
             assert retrievedPosts[i].text == reversedPosts[i]
             assert retrievedPosts[i].dateTime ==~ DATE_PATTERN
         }
-        self()
     }
 }

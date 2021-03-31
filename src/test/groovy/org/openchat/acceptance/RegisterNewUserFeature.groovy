@@ -7,7 +7,7 @@ import org.openchat.acceptance.stages.WhenUser
 
 class RegisterNewUserFeature extends ScenarioSpec<GivenUser, WhenUser, ThenUser> {
 
-    def "should register a new user"() {
+    def "register a new user"() {
         expect:
         given().an_unregistered_user()
         when().the_registration_is_requested()

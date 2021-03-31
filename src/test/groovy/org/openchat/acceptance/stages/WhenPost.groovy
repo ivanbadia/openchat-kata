@@ -3,6 +3,7 @@ package org.openchat.acceptance.stages
 import com.tngtech.jgiven.Stage
 import com.tngtech.jgiven.annotation.ExpectedScenarioState
 import com.tngtech.jgiven.annotation.ProvidedScenarioState
+import com.tngtech.jgiven.annotation.Quoted
 import ratpack.http.client.ReceivedResponse
 
 import static org.openchat.acceptance.stages.clients.PostsClient.createPost
@@ -16,7 +17,7 @@ class WhenPost extends Stage<WhenPost> {
     @ProvidedScenarioState
     private List<String> posts = []
 
-    def the_user_creates_a_post_with(String text) {
+    def the_user_creates_a_post_with(@Quoted String text) {
         posts.add text
         response = createPost user.id, text
         self()
