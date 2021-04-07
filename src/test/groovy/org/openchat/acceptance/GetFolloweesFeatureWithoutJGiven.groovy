@@ -22,11 +22,11 @@ class GetFolloweesFeatureWithoutJGiven extends Specification {
         def rebeca = registerUser("rebeca")
         def sonia = registerUser("sonia")
 
-        createFollowing biel.id, rebeca.id
-        createFollowing biel.id, sonia.id
+        createFollowing(biel.id, rebeca.id)
+        createFollowing(biel.id, sonia.id)
 
         when:
-        def response = retrieveFolloweesBy biel.id
+        def response = retrieveFolloweesBy(biel.id)
 
         then:
         assert response.status == OK
